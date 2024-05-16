@@ -17,9 +17,9 @@
 
 #define DPF_MSG_SIZE 8
 
-double bench_pcg_c4(size_t n, size_t t)
+double bench_pcg_c(size_t n, size_t t, size_t c)
 {
-    const size_t c = 4;
+    // const size_t c = 4;
     const size_t poly_size = ipow(3, n);
 
     //************************************************************************

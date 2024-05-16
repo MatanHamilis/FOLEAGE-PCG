@@ -18,7 +18,7 @@ void runBenchmarks(size_t n, size_t t, int num_trials)
 
     for (int i = 0; i < num_trials; i++)
     {
-        time += bench_pcg_c4(n, t);
+        time += bench_pcg_c(n, t,4);
         printf("Done with trial %i of %i\n", i + 1, num_trials);
     }
     printf("******************************************\n");
