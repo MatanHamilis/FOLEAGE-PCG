@@ -30,6 +30,11 @@ int main(int argc, char **argv)
 {
     int num_trials = 5;
     size_t params[][2] = {
+        {12,5},
+        {9,6},
+        {13,5},
+        {10,6},
+        {11,6},
         {14,5},
         {20,4},
         {18,4},
