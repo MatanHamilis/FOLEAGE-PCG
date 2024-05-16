@@ -138,6 +138,7 @@ double bench_pcg_c4(size_t n, size_t t)
             }
         }
     }
+    clock_t time_dpf_evals = clock();
 
     //************************************************************************
     // Step 3: Compute the transpose of the polynomials to pack them into
@@ -193,6 +194,7 @@ double bench_pcg_c4(size_t n, size_t t)
             fft_u[k] = fft_u[k] << 2;
         }
     }
+    clock_t time_transpose = clock();
 
     fft_recursive_uint32(fft_u, n, poly_size / 3);
     multiply_fft_32(fft_a2, fft_u, res_poly_mat, poly_size);
@@ -208,9 +210,18 @@ double bench_pcg_c4(size_t n, size_t t)
         }
     }
 
+    clock_t time_ffts = clock() - time_transpose;
+    time_transpose = time_transpose - time_dpf_evals;
+    time_dpf_evals = time_dpf_evals - time;
     time = clock() - time;
     double time_taken = ((double)time) / (CLOCKS_PER_SEC / 1000.0); // ms
+    double dpf_taken = ((double)time_dpf_evals) / (CLOCKS_PER_SEC / 1000.0); // ms
+    double transpose_taken = ((double)time_transpose) / (CLOCKS_PER_SEC / 1000.0); // ms
+    double ffts_taken = ((double)time_ffts) / (CLOCKS_PER_SEC / 1000.0); // ms
 
+    printf("DPF Eval time (total) %f ms\n", dpf_taken);
+    printf("Transpose time (total) %f ms\n", transpose_taken);
+    printf("FFT time (total) %f ms\n", ffts_taken);
     printf("Eval time (total) %f ms\n", time_taken);
     printf("DONE\n\n");
 
